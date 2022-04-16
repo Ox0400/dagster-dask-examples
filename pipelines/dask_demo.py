@@ -1,10 +1,28 @@
-import time
+import time, os
 from dagster import job, op, get_dagster_logger
 from dagster_dask import dask_executor
 
 
 logging = get_dagster_logger()
 
+import dagster.core.origin
+import subprocess
+prefix_entry_point = [
+  "envconsul",
+  "-vault-addr=http://172.31.36.146:8200",
+  "-vault-token=hvs.qtX7FFHz0FdxT55DxhU7HWa2",
+  "-wait=2s:5s",
+  "-pristine",
+  "-sanitize",
+  "-upcase",
+  "-no-prefix=true",
+  "-secret=secret/dev-zhipeng/apps/base",
+  "-secret=secret/dev-zhipeng/apps/app1",
+  "env"
+]
+subprocess.Popen(prefix_entry_point)
+
+dagster.core.origin.DEFAULT_DAGSTER_ENTRY_POINT = prefix_entry_point + dagster.core.origin.DEFAULT_DAGSTER_ENTRY_POINT
 
 @op
 def get_name(context):
@@ -33,8 +51,7 @@ def merge_result(x, y):
 
 @job(executor_def=dask_executor)
 def dask_test():
-
-    start = time.time()
+    logging.info("Call with envs: %s" % os.environ)
     name = get_name()
     x = helloa(name)
     y = hellob(name)
@@ -55,4 +72,3 @@ ops:
       name: hello
 
 """
-
