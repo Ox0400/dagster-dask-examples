@@ -1,0 +1,13 @@
+load_from:
+  - grpc_server:
+      host: grpc
+      port: 4266
+      location_name: "dask_demo"
+  - grpc_server:
+      host: grpc1
+      port: 4266
+      location_name: "docker_demo"
+  - grpc_server:
+      host: grpc2
+      port: 4266
+      location_name: "multi_jobs"

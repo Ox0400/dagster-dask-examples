@@ -1,0 +1,4 @@
+FROM 0x0400/dagster
+COPY dagster.yaml /app/runtime/dagster.yaml
+COPY pipelines /app/codes
+
