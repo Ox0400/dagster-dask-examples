@@ -1,0 +1,11 @@
+load_from:
+  - python_package:
+      package_name: docker_demo
+      #location_name: dataengineering_spark_team_py_38_virtual_env
+      working_directory: /app/codes
+      #working_directory: /home/ubuntu/dask-test/pipelines
+
+  - python_package:
+      package_name: dask_demo
+      #location_name: dataengineering_spark_team_py_38_virtual_env
+      working_directory: /app/codes
